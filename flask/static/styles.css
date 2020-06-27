@@ -1,0 +1,17 @@
+input {
+    margin-bottom: 5px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.main {
+    width: 60%;
+    height: 100%;
+    text-align: center;
+    border: 2px solid gray;
+    background: darkgrey;
+}
+

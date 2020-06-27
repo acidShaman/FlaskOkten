@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="../static/styles.css" rel="stylesheet">
+
+</head>
+<body>
+<div class="main">
+<h1 class="login">LOGIN</h1>
+<form name="Auth" method="post">
+    <input placeholder="Please, input your login" type="text" name="username" value="{{request.form.username}}"><br>
+    <input placeholder="Please, enter your password" type="password" name="password" value="{{request.form.password}}"><br>
+    <input type="submit" value="login">
+</form>
+    {% if error %}
+        <p><strong>ERROR:</strong>{{error}}</p>
+    {% endif %}
+    <a href="about-us">About US</a>
+</div>
+</body>
+</html>
