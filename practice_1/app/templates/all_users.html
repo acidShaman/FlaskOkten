@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{#<h1>{{zipped}}</h1>#}
+{% block Title %} Show all users {% endblock %}
+{% block Content %}
+{% for user in users %}
+    <div class="user_block">
+    id: {{ user.get('id') }}<br>
+    name: {{ user.get('name') }}<br>
+    username: {{ user.get('username') }}<br>
+    email: {{ user.get('email') }}<br>
+    address: {{ user.get('address') }}<br>
+    phone: {{ user.get('phone') }}<br>
+    website: {{ user.get('website') }}<br>
+    </div>
+{% endfor %}
+{% endblock %}
+

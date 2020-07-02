@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block Title %} Show user by ID {% endblock %}
+{% block Content %}
+    <div class="user_block">
+        id: {{ user.get('id') }}<br>
+        name: {{ user.get('name') }}<br>
+        username: {{ user.get('username') }}<br>
+        email: {{ user.get('email') }}<br>
+        address: {{ user.get('address') }}<br>
+        phone: {{ user.get('phone') }}<br>
+        website: {{ user.get('website') }}<br>
+    </div>
+{% endblock %}
