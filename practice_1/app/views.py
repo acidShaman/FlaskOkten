@@ -3,23 +3,20 @@ from flask import render_template
 from zipper import zipper
 from users import users
 
-
-def get_user_by_id(uid):
-    for user in users:
-        if user.get('id') == uid:
-            return user
-
-
 @app.route('/')
 def main():
     zipped = zipper()
     return render_template('all_users.html', zipped=zipped, users=users)
 
 
-@app.route('/users/<user_id>')
-def show_user(user_id):
+@app.route('/<userid>')
+def user_by_id(userid):
     for user in users:
-        if user.get('id') == user_id:
-            return render_template('user_by_id.html', user=user)
+        if user.get('id') == int(userid):
+            return render_template('user.html', user=user)
 
-
+@app.route('/city/<city_name>')
+def user_by_city(city_name):
+    for user in users:
+        if user.get('address').get('city').lower() == city_name:
+            return render_template('user.html', user=user)
