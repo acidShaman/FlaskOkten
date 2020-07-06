@@ -1,5 +1,2 @@
-class Config(object):
-    DEBUG = True
-
-class DevConf(Config):
+class DevConf(object):
     DEBUG = True

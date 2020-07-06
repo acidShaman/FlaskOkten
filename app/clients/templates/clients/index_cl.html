@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+{% block Title %}
+Clients Page
+{% endblock %}
+{% block Content %}
+HELLO, CLIENTS PAGE
+    <br>
+    <a href="{{ url_for('clients.new_cl') }}">Add clients</a>
+    <a href="">Search client</a><br>
+    {% for i in clients %}
+        <div>
+            id: {{ i.get('id') }}
+            name: {{ i.get('name') }}
+            age: {{ i.get('age') }}
+            location: {{ i.get('location') }}
+            <a href="{{ url_for('clients.about_cl["id_cl"]') }}"></a>
+            <hr>
+        </div>
+    {% endfor %}
+{% endblock %}
