@@ -3,6 +3,8 @@
 New Client
 {% endblock %}
 {% block Content %}
+    <a href="{{ url_for('main') }}">Main Page</a>
+    <hr>
     <h1> NEW Client</h1>
     <form method="POST" action="{{ url_for('clients.new_cl') }}">
     {% for field in form %}
@@ -11,6 +13,6 @@ New Client
             <h3>{{ field }}</h3>
         </div>
     {% endfor %}
-        <button type="submit">Create Client</button>
+        <button type="submit" formaction="">Create Client and add pet</button>
     </form>
 {% endblock %}

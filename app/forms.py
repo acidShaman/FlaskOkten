@@ -11,4 +11,5 @@ class ClientForm(FormBP):
 
 
 class PetForm(FormBP):
-    species = StringField('species')
+    type_pet = StringField('type_pet')
+    client_id = StringField('client_id')

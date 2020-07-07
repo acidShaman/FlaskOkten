@@ -3,5 +3,15 @@
 About Client
 {% endblock %}
 {% block Content %}
-{{ client }}
+    <a href="{{ url_for('main') }}">Main Page</a>
+    <hr>
+<div>
+    id: {{ client.get('id') }}<br>
+    name: {{ client.get('name') }}<br>
+    age: {{ client.get('age') }}<br>
+    location: {{ client.get('location') }}<br>
+    pets: {{ client.get('pets') }}
+    <a href="{{ url_for('client.get("id")/clients.add_pet') }}">Add pet</a>
+    <hr>
+</div>
 {% endblock %}

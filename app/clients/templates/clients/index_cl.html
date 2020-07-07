@@ -3,17 +3,25 @@
 Clients Page
 {% endblock %}
 {% block Content %}
+    <a href="{{ url_for('main') }}">Main Page</a>
+    <hr>
 HELLO, CLIENTS PAGE
+    <hr><hr>
     <br>
     <a href="{{ url_for('clients.new_cl') }}">Add clients</a>
-    <a href="">Search client</a><br>
+    <a href="">Search client</a><br><hr>
     {% for i in clients %}
         <div>
             id: {{ i.get('id') }}
             name: {{ i.get('name') }}
             age: {{ i.get('age') }}
-            location: {{ i.get('location') }}
-            <a href="{{ url_for('clients.about_cl["id_cl"]') }}"></a>
+            location: {{ i.get('location') }}<br>
+            pets: {% for pet in pets %}
+                    {% if pet.get('userId') == i.get('id') %}
+                    {{ pet }}
+                    {% endif %}
+                {% endfor %}<br>
+            <a href="{{ i.get('id') }}"> go to profile</a>
             <hr>
         </div>
     {% endfor %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block Title %}
+    Adding pet
+{% endblock %}
+{% block Content %}
+    <a href="{{ url_for('main') }}">Main Page</a>
+    <hr>
+    <h2>New Pet</h2>
+    <form method="post" action="{{ url_for('pets.add_pet')}}">
+        {% for field in form %}
+            <div>
+                <h4>{{ field.label }}</h4>
+                {{ field }}
+            </div>
+        {% endfor %}
+        <button type="submit"> Add pet</button>
+    </form>
+{% endblock %}
