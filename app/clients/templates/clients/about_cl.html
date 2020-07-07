@@ -10,8 +10,7 @@ About Client
     name: {{ client.get('name') }}<br>
     age: {{ client.get('age') }}<br>
     location: {{ client.get('location') }}<br>
-    pets: {{ client.get('pets') }}
-    <a href="{{ url_for('client.get("id")/clients.add_pet') }}">Add pet</a>
+    pets: {{ pets }}
     <hr>
 </div>
 {% endblock %}

@@ -49,6 +49,7 @@ def delete_pet(pet_name):
                 pets_list.remove(pet)
     return render_template('pets/delete_pet.html', pet_name=pet_name)
 
+
 @pets.route('/count/<type_pet>')
 def count_species(type_pet):
     counter = 0

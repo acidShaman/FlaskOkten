@@ -28,11 +28,16 @@ def new_cl():
 
 @clients.route('/<id_cl>/')
 def about_cl(id_cl):
-    client = None
-    for i in clients_list:
-        if str(i.get('id')) == id_cl:
-            client = i
-    return render_template('clients/about_cl.html', client=client)
+    owner = None
+    pets = []
+    for client in clients_list:
+        if str(client.get('id')) == id_cl:
+            owner = client
+    for pet in pets_list:
+        if pet.get('userId') == owner.get('id'):
+            pets.append(pet)
+
+    return render_template('clients/about_cl.html', client=owner, pets=pets)
 
 
 
