@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+{% block Title %}
+    All Owners
+{% endblock %}
+{% block Title1 %}
+    with {{ pet_type }}
+{% endblock %}
+{% block Navbar %}
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('owners.add_owner') }}">Add Owner</a>
+    </li>
+{% endblock %}
+{% block Content %}
+    <div class="d-flex flex-wrap justify-content-start">
+     {% for owner in owners %}
+         <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ owner.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Age: {{ owner.age }}</h6>
+               <p class="card-text">{{ owner.location }}</p>
+    <a href="{{ url_for('owners.show_pets_by_owner', index=owners.index(owner)) }}" class="card-link">Show pets</a>
+    <a href="{{ url_for('owners.add_pet', index=owners.index(owner)) }}" class="card-link">Add pet</a>
+    <a href="{{ url_for('owners.delete_owner', owner_name = owner['name'] ) }}" class="card-link">Delete</a>
+  </div>
+        </div>
+     {% endfor %}
+    </div>
+{% endblock %}

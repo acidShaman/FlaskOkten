@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block Title %}
+    Add Owner
+{% endblock %}
+{% block Content %}
+    <div class="d-flex justify-content-center">
+    <form method="post">
+        {% for field in form %}
+            {% if not field == form.save %}
+                <div class="form-group">
+                    {{ field.label }}<br>
+                    {{ field }}
+                </div>
+                {% if field.errors %}
+                    <small class="form-text text-muted">{{ field.errors[0] }}</small>
+                {% endif %}
+                {% else %}
+                <div>{{ field }}</div>
+            {% endif %}
+        {% endfor %}
+    </form>
+    </div>
+{% endblock %}
