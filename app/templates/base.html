@@ -9,7 +9,7 @@
 <body>
 <div class="container-fluid">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><img src="../static/img/veterinary.svg" width="30" height="30" alt="Owners & Pets"></a>
+  <a class="navbar-brand" href="{{ url_for('owners.show_owners') }}"><img src="../static/img/veterinary.svg" width="30" height="30" alt="Owners & Pets"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -22,7 +22,7 @@
         <a class="nav-link" href="{{ url_for('owners.show_owners') }}">Show Owners</a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="#">Show Pets</a>
+        <a class="nav-link" href="{{ url_for('owners.show_all_pets') }}">Show Pets</a>
       </li>
       {% block Navbar %}
       {% endblock %}
