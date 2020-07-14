@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 {% block Title %}
-    All Pets
+{#    Pets of {{ owner.name.title() }}#}
+{% endblock %}
+{% block Navbar_Start %}
 {% endblock %}
 {% block Content %}
     <div class="d-flex flex-wrap justify-content-start">
      {% for pet in pets %}
          <div class="card" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title">{{ pet.name }}</h5>
+                <h5 class="card-title">{{ pet.name.title() }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Age: {{ pet.age }}</h6>
                 <p class="card-text">{{ pet.type_pet.title() }}</p>
-                <a href="" class="card-link">Count {{ pet.type_pet.title() }}s</a>
+                <a href="{{ url_for('owners.show_all_pets_by_type', type_pet=pet.type_pet) }}" class="count-button card-link">All {{ pet.type_pet.title() }}s</a>
                 <a href="{{ url_for('owners.show_owners_by_pet_type', type_pet=pet.type_pet) }}" class="card-link">Owners with {{ pet.type_pet.title() }}</a>
-                <a href="" class="card-link">Delete</a>
+                <a href="{{ url_for('owners.delete_pet_by_id', pet_index=pet.id) }}" class="card-link">Delete</a>
             </div>
         </div>
      {% endfor %}

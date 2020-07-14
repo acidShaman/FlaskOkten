@@ -15,10 +15,10 @@
             <div class="card-body">
                 <h5 class="card-title">{{ owner.name.title() }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Age: {{ owner.age }}</h6>
-               <p class="card-text">{{ owner.location }}</p>
+               <p class="card-text">{{ owner.location.title() }}</p>
     <a href="{{ url_for('owners.show_pets_by_owner', index=owner.id) }}" class="card-link">Show pets</a>
     <a href="{{ url_for('owners.add_pet', index=owner.id) }}" class="card-link">Add pet</a>
-    <a href="" class="card-link">Delete</a>
+    <a href="{{ url_for('owners.delete_owner', owner_id=owner.id) }}" class="card-link">Delete</a>
   </div>
         </div>
      {% endfor %}
