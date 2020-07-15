@@ -5,3 +5,7 @@
 .card {
     margin-top: 15px;
 }
+
+#current_owner {
+    height: 100px;
+}

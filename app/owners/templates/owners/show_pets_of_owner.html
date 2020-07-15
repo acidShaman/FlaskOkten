@@ -3,6 +3,9 @@
 {#    Pets of {{ owner.name.title() }}#}
 {% endblock %}
 {% block Navbar_Start %}
+    <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('owners.add_pet', index=index) }}">Add pet</a>
+      </li>
 {% endblock %}
 {% block Content %}
     <div class="d-flex flex-wrap justify-content-start">
@@ -14,6 +17,7 @@
                 <p class="card-text">{{ pet.type_pet.title() }}</p>
                 <a href="{{ url_for('owners.show_all_pets_by_type', type_pet=pet.type_pet) }}" class="count-button card-link">All {{ pet.type_pet.title() }}s</a>
                 <a href="{{ url_for('owners.show_owners_by_pet_type', type_pet=pet.type_pet) }}" class="card-link">Owners with {{ pet.type_pet.title() }}</a>
+                <a href="{{ url_for('owners.edit_pet', pet_id=pet.id) }}" class="card-link">Edit</a>
                 <a href="{{ url_for('owners.delete_pet_by_id', pet_index=pet.id) }}" class="card-link">Delete</a>
             </div>
         </div>

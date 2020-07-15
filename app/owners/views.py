@@ -26,6 +26,28 @@ def add_owner():
     return render_template('owners/add_owner.html', form=form)
 
 
+@owners.route('/<int:owner_id>/edit', methods=['POST', 'GET'])
+def edit_owner(owner_id):
+    form = OwnerForm(request.form)
+    current_owner = OwnerModel.query.get(owner_id)
+    if request.method == 'POST' and form.validate():
+        current_owner = OwnerModel.query.filter_by(id=owner_id).update({'name': request.form['name'].lower(), 'age': request.form['age'], 'location': request.form['location'].lower()})
+        db.session.commit()
+        return redirect(url_for('owners.show_owners'))
+    return render_template('owners/edit_owner.html', owner=current_owner, form=form)
+
+
+@owners.route('all_pets/<int:pet_id>/edit', methods=['POST', 'GET'])
+def edit_pet(pet_id):
+    form = PetForm(request.form)
+    current_pet = PetModel.query.get(pet_id)
+    if request.method == 'POST' and form.validate():
+        current_pet = PetModel.query.filter_by(id=pet_id).update({'name': request.form['name'].lower(), 'age': request.form['age'], 'type_pet': request.form['type_pet'].lower()})
+        db.session.commit()
+        return redirect(url_for('owners.show_all_pets'))
+    return render_template('owners/edit_pet.html', pet=current_pet, form=form)
+
+
 @owners.route('/<int:index>/pets/add_pet', methods=['GET', 'POST'])
 def add_pet(index):
     form = PetForm(request.form)

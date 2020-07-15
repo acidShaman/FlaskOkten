@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block Title %}
+    Editing {{ owner.name.title() }}
+{% endblock %}
+{% block Content %}
+    <div class="d-flex justify-content-around">
+    <form method="post">
+        {% for field in form %}
+            {% if not field == form.save %}
+                <div class="form-group">
+                    {{ field.label }}<br>
+                    {{ field }}
+                </div>
+                {% if field.errors %}
+                    <small class="form-text text-muted">{{ field.errors[0] }}</small>
+                {% endif %}
+                {% else %}
+                <div>{{ field }}</div>
+            {% endif %}
+        {% endfor %}
+    </form>
+    <div class="card" style="width: 18rem;">
+            <div class="card-body d-flex flex-column justify-content-around">
+                <h6 class=" mb-2">Current owner:</h6>
+                <h5 class="card-title">{{ owner.name.title() }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Age: {{ owner.age }}</h6>
+               <p class="card-text">{{ owner.location.title() }}</p>
+    </div>
+    </div>
+    </div>
+{% endblock %}
