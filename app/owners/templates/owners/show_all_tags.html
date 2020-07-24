@@ -3,25 +3,25 @@
     All existing tags for pets
 {% endblock %}
 {% block Content %}
-    <div class="d-flex justify-content-left">
+    <div class="d-flex justify-content-left" style="margin-bottom: 20px">
     <form method="post">
         {% for field in form %}
             {% if not field == form.save %}
-                <div class="form-group">
+                <div class="form-group d-inline">
                     {{ field }}
                 </div>
                 {% if field.errors %}
                     <small class="form-text text-muted">{{ field.errors[0] }}</small>
                 {% endif %}
                 {% else %}
-                <div>{{ field }}</div>
+                <div class="d-inline">{{ field }}</div>
             {% endif %}
         {% endfor %}
     </form>
     </div>
     <div>
-        {% for tag in tags %}
-            <span class="badge badge-primary">{{ tag.name.title() }}</span>
+        {% for single_tag in tags %}
+            <span class="badge badge-primary">{{ single_tag.name.title() }}</span>
         {% endfor %}
     </div>
 {% endblock %}

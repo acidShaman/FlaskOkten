@@ -19,8 +19,9 @@ def show_tags():
     all_tags = TagModel.query.all()
     form = TagForm(request.form)
     if request.method == 'POST' and form.validate():
-        tag = TagModel(name=request.form['name'].lower())
-        if tag in all_tags:
+        name = request.form['name']
+        tag = TagModel(name=name)
+        if TagModel.query.filter_by(name=name).first():
             return render_template('owners/show_all_tags.html', tags=all_tags, form=form)
         db.session.add(tag)
         db.session.commit()
@@ -64,8 +65,17 @@ def edit_pet(pet_id):
 def add_pet(index):
     form = PetForm(request.form)
     if request.method == 'POST' and form.validate():
-        pet = PetModel(name=request.form['name'].lower(), age=request.form['age'], type_pet=request.form['type_pet'].lower(),
-                       owner_id=index)
+        name = request.form['name'].lower()
+        age = request.form['age']
+        type_pet = request.form['type_pet'].lower()
+
+        tag_name = request.form['tags']
+        tag = TagModel.query.filter_by(name=tag_name).first()
+
+        pet = PetModel(name=name, age=age, type_pet=type_pet, owner_id=index)
+
+        pet.tags.append(tag)
+
         db.session.add(pet)
         db.session.commit()
         return redirect(url_for('owners.show_pets_by_owner', index=index))
