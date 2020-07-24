@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, url_for, redirect
-from app.forms import OwnerForm, PetForm
-from app.owners.models import OwnerModel, PetModel
-from app.owners_and_pets import owners_list
+from app.forms import OwnerForm, PetForm, TagForm
+from app.owners.models import OwnerModel, PetModel, TagModel
 from app import db
 
 owners = Blueprint('owners', __name__, template_folder='templates', static_folder='static')
@@ -13,6 +12,19 @@ def show_owners():
     if not all_owners:
         return redirect(url_for('owners.add_owner'))
     return render_template('owners/show_all_owners.html', owners=all_owners)
+
+
+@owners.route('/all-pets/tags', methods=['POST', 'GET'])
+def show_tags():
+    all_tags = TagModel.query.all()
+    form = TagForm(request.form)
+    if request.method == 'POST' and form.validate():
+        tag = TagModel(name=request.form['name'].lower())
+        if tag in all_tags:
+            return render_template('owners/show_all_tags.html', tags=all_tags, form=form)
+        db.session.add(tag)
+        db.session.commit()
+    return render_template('owners/show_all_tags.html', tags=all_tags, form=form)
 
 
 @owners.route('/add_owner', methods=['POST', 'GET'])

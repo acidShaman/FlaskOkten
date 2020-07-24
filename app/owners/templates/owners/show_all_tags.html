@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block Title %}
+    All existing tags for pets
+{% endblock %}
+{% block Content %}
+    <div class="d-flex justify-content-left">
+    <form method="post">
+        {% for field in form %}
+            {% if not field == form.save %}
+                <div class="form-group">
+                    {{ field }}
+                </div>
+                {% if field.errors %}
+                    <small class="form-text text-muted">{{ field.errors[0] }}</small>
+                {% endif %}
+                {% else %}
+                <div>{{ field }}</div>
+            {% endif %}
+        {% endfor %}
+    </form>
+    </div>
+    <div>
+        {% for tag in tags %}
+            <span class="badge badge-primary">{{ tag.name.title() }}</span>
+        {% endfor %}
+    </div>
+{% endblock %}
