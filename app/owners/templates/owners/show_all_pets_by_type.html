@@ -13,6 +13,9 @@
                 <h5 class="card-title">{{ pet.name.title() }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted">Age: {{ pet.age }}</h6>
                 <p class="card-text">{{ pet.type_pet.title() }}</p>
+                {% for tag in pet.tags %}
+                <p class="card-text">{{ tag }}</p>
+                {% endfor %}
                 <a href="{{ url_for('owners.show_owners_by_pet_type', type_pet=pet.type_pet) }}" class="card-link">Owners with {{ pet.type_pet.title() }}</a>
                 <a href="{{ url_for('owners.delete_pet_by_id', pet_index=pet.id) }}" class="card-link">Delete</a>
             </div>

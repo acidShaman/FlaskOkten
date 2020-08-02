@@ -69,7 +69,7 @@ def add_pet(index):
         age = request.form['age']
         type_pet = request.form['type_pet'].lower()
 
-        tag_name = request.form['tags']
+        tag_name = request.form['tag']
         tag = TagModel.query.filter_by(name=tag_name).first()
 
         pet = PetModel(name=name, age=age, type_pet=type_pet, owner_id=index)
@@ -79,6 +79,7 @@ def add_pet(index):
         db.session.add(pet)
         db.session.commit()
         return redirect(url_for('owners.show_pets_by_owner', index=index))
+    print(form.errors)
     return render_template('owners/add_pet.html', form=form)
 
 

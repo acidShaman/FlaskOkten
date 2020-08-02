@@ -19,4 +19,5 @@ manager.add_command('db', MigrateCommand)
 from app.owners.views import owners
 app.register_blueprint(owners, url_prefix='/owners')
 
+from app.admin import admin
 from app import views
