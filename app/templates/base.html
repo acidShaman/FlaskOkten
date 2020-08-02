@@ -41,11 +41,13 @@
               <li class="nav-item active">
             <a class="nav-link" href="{{ url_for('register') }}">Sign up</a>
           </li>
+            {% if current_user == None %}
             <li class="nav-item active">
                 <div class="user alert alert-success" role="alert">
-                    {{ current_user.email }}
+                    <a href="{{ url_for('logout') }}">{{ current_user.email }}</a>
                 </div>
             </li>
+            {% endif %}
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
