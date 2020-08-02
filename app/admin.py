@@ -12,7 +12,8 @@ class FixedModelView(ModelView):
 
 class SecureModelView(FixedModelView):
     def is_accessible(self):
-        return current_user.is_authenticated
+        if current_user.is_admin:
+            return current_user.is_authenticated
 
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('login'))
@@ -28,7 +29,7 @@ def load_user(user_id):
 
 
 admin.add_view(SecureModelView(UserModel, db.session))
-admin.add_view(FixedModelView(OwnerModel, db.session))
-admin.add_view(FixedModelView(PetModel, db.session))
-admin.add_view(FixedModelView(TagModel, db.session))
+admin.add_view(SecureModelView(OwnerModel, db.session))
+admin.add_view(SecureModelView(PetModel, db.session))
+admin.add_view(SecureModelView(TagModel, db.session))
 

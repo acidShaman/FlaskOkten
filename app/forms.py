@@ -1,5 +1,5 @@
 import wt as wt
-from wtforms import Form, StringField, IntegerField, SubmitField, SelectField
+from wtforms import Form, StringField, IntegerField, SubmitField, SelectField, PasswordField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, length, NumberRange
 from .owners.models import TagModel
@@ -29,4 +29,16 @@ class PetForm(Form):
 class TagForm(Form):
     name = StringField('Name', [DataRequired(), length(2, 50, 'Tag must be 2-50 characters long')])
     save = SubmitField('Save')
+
+
+class RegisterForm(Form):
+    email = StringField('Email', [DataRequired(), length(2, 50, 'Email must be 2-50 characters long')])
+    password = PasswordField('Password', [DataRequired(), length(6, 50, 'Password must be 6-50 characters long')])
+    create = SubmitField('Create')
+
+
+class LoginForm(Form):
+    email = StringField('Email', [DataRequired(), length(2, 50, 'Please enter your email')])
+    password = PasswordField('Password', [DataRequired(), length(6, 50, 'Please enter your password')])
+    create = SubmitField('Sign in')
 

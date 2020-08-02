@@ -19,6 +19,11 @@
     <ul class="navbar-nav mr-auto">
     {% block Navbar_Start %}
       {% endblock %}
+        {% if current_user.is_admin %}
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin">Admin</a>
+            </li>
+        {% endif %}
       <li class="nav-item active">
         <a class="nav-link" href="{{ url_for('owners.show_owners') }}">Show Owners</a>
       </li>
@@ -30,6 +35,17 @@
       </li>
       {% block Navbar %}
       {% endblock %}
+    <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('login') }}">Sign in</a>
+          </li>
+              <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('register') }}">Sign up</a>
+          </li>
+            <li class="nav-item active">
+                <div class="user alert alert-success" role="alert">
+                    {{ current_user.email }}
+                </div>
+            </li>
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

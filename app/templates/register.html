@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
+{% block Title %}
+    Signing up new user
+{% endblock %}
 {% block Content %}
-<form method="post">
+    <div class="alert alert-light" role="alert">
+      Signing up new user
+</div>
+    <form method="post">
         {% for field in form %}
             {% if not field == form.create %}
                 <div class="form-group">
