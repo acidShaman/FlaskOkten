@@ -4,8 +4,13 @@
 {% endblock %}
 {% block Content %}
     <div class="alert alert-light" role="alert">
-      Signing up new user
-</div>
+        Signing up new user
+    </div>
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+       {{ error }}
+    </div>
+    {% endif %}
     <form method="post">
         {% for field in form %}
             {% if not field == form.create %}
@@ -16,7 +21,7 @@
                 {% if field.errors %}
                     <small class="form-text text-muted">{{ field.errors[0] }}</small>
                 {% endif %}
-                {% else %}
+            {% else %}
                 <div>{{ field }}</div>
             {% endif %}
         {% endfor %}

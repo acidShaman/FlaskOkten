@@ -18,3 +18,7 @@
     padding-right: 5px;
     display: flex;
 }
+
+ul li::marker{
+    visibility: hidden;
+}

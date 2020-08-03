@@ -18,11 +18,10 @@ def login():
         email = request.form['email']
         password = request.form['password']
         user = UserModel.query.filter_by(email=email).first()
-        print(user)
-        if user.password == password:
+        if user and user.password == password:
             login_user(user)
             if user.is_admin:
-                return redirect('/admin')
+                return redirect('admin')
             else:
                 return redirect(url_for('owners.show_owners'))
     return render_template('login.html', form=form)
@@ -32,10 +31,14 @@ def login():
 def register():
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
-        email = request.form['email']
-        password = request.form['password']
-        user = UserModel(email=email, password=password, is_admin=False)
-        db.session.add(user)
+        data = dict(form.data)
+        del data['confirm_password']
+        del data['create']
+        user = UserModel.query.filter_by(email=data['email']).first()
+        if user:
+            return render_template('register.html', form=form, error='User with this email already exists')
+        new_user = UserModel(**data)
+        db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
     return render_template('register.html', form=form)

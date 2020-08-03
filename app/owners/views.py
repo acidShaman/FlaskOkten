@@ -55,7 +55,19 @@ def edit_pet(pet_id):
     form = PetForm(request.form)
     current_pet = PetModel.query.get(pet_id)
     if request.method == 'POST' and form.validate():
-        current_pet = PetModel.query.filter_by(id=pet_id).update({'name': request.form['name'].lower(), 'age': request.form['age'], 'type_pet': request.form['type_pet'].lower()})
+        updated_pet = PetModel()
+        for item in request.form.lists():
+            if item[0] == 'name':
+                updated_pet.name = item[1][0]
+            if item[0] == 'age':
+                updated_pet.age = item[1][0]
+            if item[0] == 'type_pet':
+                updated_pet.type_pet = item[1][0]
+            else:
+                for tag_name in item[1]:
+                    tag = TagModel.query.filter(TagModel.name==tag_name).first()
+                    updated_pet.tags.append(tag)
+        current_pet = PetModel.query.filter_by(id=pet_id).update({'name': updated_pet.name.lower(), 'age': updated_pet.age, 'type_pet': updated_pet.type_pet.lower()})
         db.session.commit()
         return redirect(url_for('owners.show_all_pets'))
     return render_template('owners/edit_pet.html', pet=current_pet, form=form)
@@ -65,21 +77,23 @@ def edit_pet(pet_id):
 def add_pet(index):
     form = PetForm(request.form)
     if request.method == 'POST' and form.validate():
-        name = request.form['name'].lower()
-        age = request.form['age']
-        type_pet = request.form['type_pet'].lower()
-
-        tag_name = request.form['tag']
-        tag = TagModel.query.filter_by(name=tag_name).first()
-
-        pet = PetModel(name=name, age=age, type_pet=type_pet, owner_id=index)
-
-        pet.tags.append(tag)
-
+        print(request.form)
+        pet = PetModel()
+        for item in request.form.lists():
+            if item[0] == 'name':
+                pet.name = item[1][0].lower()
+            if item[0] == 'age':
+                pet.age = item[1][0]
+            if item[0] == 'type_pet':
+                pet.type_pet = item[1][0].lower()
+            else:
+                for tag_name in item[1]:
+                    tag = TagModel.query.filter(TagModel.name == tag_name).first()
+                    pet.tags.append(tag)
+        pet.owner_id = index
         db.session.add(pet)
         db.session.commit()
         return redirect(url_for('owners.show_pets_by_owner', index=index))
-    print(form.errors)
     return render_template('owners/add_pet.html', form=form)
 
 

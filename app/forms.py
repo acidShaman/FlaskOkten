@@ -1,10 +1,15 @@
 import wt as wt
-from wtforms import Form, StringField, IntegerField, SubmitField, SelectField, PasswordField
+from wtforms import Form, StringField, IntegerField, SubmitField, SelectField, PasswordField, SelectMultipleField, widgets
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from wtforms.validators import DataRequired, length, NumberRange
+from wtforms.validators import DataRequired, length, NumberRange, Email, EqualTo
 from .owners.models import TagModel
 
 tags = [(tag.id, tag.name) for tag in TagModel.query.all()]
+
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = widgets.ListWidget(prefix_label=False)
+    option_widget = widgets.CheckboxInput()
 
 
 class OwnerForm(Form):
@@ -22,7 +27,7 @@ class PetForm(Form):
     # tags = QuerySelectField(query_factory=TagModel.objects.all(),
     #                         get_pk=lambda a: a.id,
     #                         get_label=lambda a: a.name)
-    tag = SelectField('Tags', choices=tags, coerce=int)
+    tag = MultiCheckboxField('Tags', choices=tags, coerce=int)
     save = SubmitField('Save')
 
 
@@ -32,13 +37,14 @@ class TagForm(Form):
 
 
 class RegisterForm(Form):
-    email = StringField('Email', [DataRequired(), length(2, 50, 'Email must be 2-50 characters long')])
+    email = StringField('Email', [DataRequired(), Email(), length(2, 50, 'Email must be 2-50 characters long')])
     password = PasswordField('Password', [DataRequired(), length(6, 50, 'Password must be 6-50 characters long')])
+    confirm_password = PasswordField('Confirm password', [DataRequired(), EqualTo('password', 'Password do not match'), length(6, 50, 'Password must be 6-50 characters long')])
     create = SubmitField('Create')
 
 
 class LoginForm(Form):
-    email = StringField('Email', [DataRequired(), length(2, 50, 'Please enter your email')])
+    email = StringField('Email', [DataRequired(), Email(), length(2, 50, 'Please enter your email')])
     password = PasswordField('Password', [DataRequired(), length(6, 50, 'Please enter your password')])
     create = SubmitField('Sign in')
 

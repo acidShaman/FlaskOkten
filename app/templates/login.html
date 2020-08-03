@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block Content %}
-<form method="post">
+    <form method="post">
         {% for field in form %}
             {% if not field == form.create %}
                 <div class="form-group">
@@ -10,7 +10,7 @@
                 {% if field.errors %}
                     <small class="form-text text-muted">{{ field.errors[0] }}</small>
                 {% endif %}
-                {% else %}
+            {% else %}
                 <div>{{ field }}</div>
             {% endif %}
         {% endfor %}
