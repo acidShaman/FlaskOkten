@@ -1,23 +1,16 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+from flask_restful import Api
 
-from flask_migrate import Migrate, MigrateCommand
-from flask_script import Manager
-
-from config import DevConf
+from config import DevConfig
+from app.resources import User, Post, User1, Post1
 
 
 app = Flask(__name__)
-app.config.from_object(DevConf)
+app.config.from_object(DevConfig)
 
-db = SQLAlchemy(app)
+api = Api(app)
 
-migrate = Migrate(app, db)
-manager = Manager(app)
-manager.add_command('db', MigrateCommand)
-
-from app.owners.views import owners
-app.register_blueprint(owners, url_prefix='/owners')
-
-from app.admin import admin
-from app import views
+api.add_resource(User, '/user', '/user/<int:user_id>')
+api.add_resource(Post, '/posts', '/posts/<int:post_id>', '/user/<int:user_id>/post')
+api.add_resource(User1, '/users')
+api.add_resource(Post1, '/user/<int:user_id>/post')
