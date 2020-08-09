@@ -1,4 +1,5 @@
 from db import db
+from crypt import bcrypt
 
 
 class UserModel(db.Model):
@@ -7,17 +8,19 @@ class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(200), nullable=False)
     posts = db.relationship('PostModel', backref='user', lazy=True)
 
     def __repr__(self):
         return f'{self.id}. {self.name} - {self.email}'
 
-    def __init__(self, name, email):
+    def __init__(self, name, email, password):
+        self.password = bcrypt.generate_password_hash(password, 10)
         self.name = name
         self.email = email
 
     def json(self):
-        return {'name': self.name, 'email': self.email}
+        return {'name': self.name, 'email': self.email, 'password': self.password}
 
     def save_to_db(self):
         db.session.add(self)
@@ -46,7 +49,7 @@ class PostModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(20), nullable=False)
     text = db.Column(db.String(300), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, ondelete='CASCADE')
 
     def __init__(self, title, text, user_id):
         self.title = title
@@ -56,8 +59,8 @@ class PostModel(db.Model):
     def __repr__(self):
         return {'title': self.title, 'text': self.text, 'user_id': self.user_id}
 
-    def json(self):
-        return {'title': self.title, 'text': self.text, 'user_id': self.user_id}
+    # def json(self):
+    #     return {'title': self.title, 'text': self.text, 'user_id': self.user_id}
 
     def save_to_db(self):
         db.session.add(self)
